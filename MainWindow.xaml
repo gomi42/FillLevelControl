@@ -1,0 +1,31 @@
+﻿<Window x:Class="FillLevelControlTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:FillLevelControlTest"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="Fill Level Control Demo"
+        Width="488"
+        Height="450"
+        mc:Ignorable="d">
+    <Grid>
+        <ScrollBar x:Name="FillLevel"
+                   Width="16"
+                   Margin="20,20,0,20"
+                   HorizontalAlignment="Left"
+                   Maximum="100"
+                   Minimum="0"
+                   Orientation="Vertical"
+                   RenderTransformOrigin="0.5,0.5"
+                   SmallChange="1"
+                   Value="55">
+            <ScrollBar.RenderTransform>
+                <RotateTransform Angle="180" />
+            </ScrollBar.RenderTransform>
+        </ScrollBar>
+        <local:FillLevelControl x:Name="FillLevelControl"
+                                Margin="97,20,27,20"
+                                FillLevel="{Binding Value,
+                                                    ElementName=FillLevel}" />
+    </Grid>
+</Window>
