@@ -19,18 +19,18 @@ The converter `ShapeClipConverter` creates a geometry of the given size (using t
         Grid.Row="1"
         Background="#FFEEEEEE"
         Clip="{Binding ActualHeight,
-                        Converter={StaticResource ShapeClipConverter},
-                        ElementName=Part_Container}">
+                       Converter={StaticResource ShapeClipConverter},
+                       ElementName=Part_Container}">
         <Grid>
             <Rectangle x:Name="Part_FillLevel"
                         VerticalAlignment="Bottom"
                         Fill="Red" />
             <Path Data="{Binding ActualHeight,
-                                    Converter={StaticResource ShapeClipConverter},
-                                    ElementName=Part_Container}"
-                    Stretch="None"
-                    Stroke="#ff880000"
-                    StrokeThickness="3" />
+                                 Converter={StaticResource ShapeClipConverter},
+                                 ElementName=Part_Container}"
+                  Stretch="None"
+                  Stroke="#ff880000"
+                  StrokeThickness="3" />
         </Grid>
     </Border>
 
