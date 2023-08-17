@@ -20,7 +20,7 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Margin="0,0,0,5"
-                                               HorizontalAlignment="Center"
+                                               HorizontalAlignment="Left"
                                                FontSize="14"
                                                Text="Water Level" />
                                     <Border x:Name="Part_Container"
@@ -43,7 +43,7 @@
                                     </Border>
                                     <Label Grid.Row="2"
                                            Margin="0,5,0,0"
-                                           HorizontalAlignment="Center"
+                                           HorizontalAlignment="Left"
                                            Content="{TemplateBinding Value}"
                                            FontSize="14" />
                                 </Grid>
