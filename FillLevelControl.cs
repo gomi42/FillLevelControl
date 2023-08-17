@@ -25,6 +25,11 @@ namespace FillLevelControlTest
             container = GetTemplateChild("Part_Container") as FrameworkElement;
             fillLevelIndicator = GetTemplateChild("Part_FillLevel") as Rectangle;
 
+            if (container == null || fillLevelIndicator == null)
+            {
+                return;
+            }
+
             container.SizeChanged += OnContainerSizeChanged;
         }
 
