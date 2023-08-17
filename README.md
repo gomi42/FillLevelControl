@@ -36,4 +36,4 @@ The converter `ShapeClipConverter` creates a geometry of the given size (using t
 
 ```
 
-The implementation of the `FillLevelControl` is straight foreward. It sets the height and the color of the inner rectangle `Part_FillLevel` according to the fill level and corrects the rectangle's height when the control is resized.
+The implementation of the `FillLevelControl` is straight foreward. The method `SetFillLevel` sets the height and the color of the inner rectangle `Part_FillLevel` according to the fill level and corrects the rectangle's height when the control is resized.
