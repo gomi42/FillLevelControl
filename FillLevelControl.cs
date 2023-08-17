@@ -1,70 +1,71 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace FillLevelControlTest
 {
-    public class FillLevelControl : Control
+    public class FillLevelControl : RangeBase
     {
         private FrameworkElement container;
         private Rectangle fillLevelIndicator;
-
-        public FillLevelControl()
-        {
-            SizeChanged += OnSizeChanged;
-        }
-
-        public double FillLevel
-        {
-            get => (double)GetValue(FillLevelProperty);
-            set => SetValue(FillLevelProperty, value);
-        }
-
-        public static readonly DependencyProperty FillLevelProperty =
-            DependencyProperty.Register("FillLevel", typeof(double), typeof(FillLevelControl), new FrameworkPropertyMetadata(20.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, FillLevelChanged));
-
-        private static void FillLevelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((FillLevelControl)d).OnFillLevelChanged();
-        }
-
-        private void OnFillLevelChanged()
-        {
-            SetFillLevel();
-        }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
+            if (container != null)
+            {
+                container.SizeChanged -= OnContainerSizeChanged;
+            }
+
             container = GetTemplateChild("Part_Container") as FrameworkElement;
             fillLevelIndicator = GetTemplateChild("Part_FillLevel") as Rectangle;
+
+            container.SizeChanged += OnContainerSizeChanged;
         }
 
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
+        {
+            SetFillLevel();
+        }
+
+        protected override void OnMaximumChanged(double oldMinimum, double newMinimum)
+        {
+            SetFillLevel();
+        }
+
+        protected override void OnValueChanged(double oldMinimum, double newMinimum)
+        {
+            SetFillLevel();
+        }
+
+        private void OnContainerSizeChanged(object sender, SizeChangedEventArgs e)
         {
             SetFillLevel();
         }
 
         private void SetFillLevel()
         {
-            if (fillLevelIndicator == null)
+            if (container == null || fillLevelIndicator == null)
             {
                 return;
             }
 
-            double fillLevel = FillLevel / 100.0;
+            double fillLevel = (Value - Minimum) / (Maximum - Minimum);
 
             var height = container.ActualHeight * fillLevel;
             fillLevelIndicator.Height = height;
 
-            var fillColor = GetFillColor(fillLevel);
+            var fillColor = GetGradientColor(fillLevel);
             fillLevelIndicator.Fill = new SolidColorBrush(fillColor);
         }
 
-        private GradientStop[] gradientStops = new GradientStop[] 
+        // the array must be sorted ascending by offset
+        private GradientStop[] gradientStops = new GradientStop[]
         {
             new GradientStop(Color.FromRgb(255, 0, 0), 0),
             new GradientStop(Color.FromRgb(255, 255, 0), 0.4),
@@ -72,7 +73,7 @@ namespace FillLevelControlTest
             new GradientStop(Color.FromRgb(0, 255, 0), 1)
         };
 
-        private Color GetFillColor(double fillLevel)
+        private Color GetGradientColor(double fillLevel)
         {
             int lastStop = gradientStops.Count() - 1;
 

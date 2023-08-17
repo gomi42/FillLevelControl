@@ -24,10 +24,5 @@ namespace FillLevelControlTest
         {
             InitializeComponent();
         }
-
-        private void FillLevel_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            FillLevelControl.FillLevel = e.NewValue;
-        }
     }
 }
